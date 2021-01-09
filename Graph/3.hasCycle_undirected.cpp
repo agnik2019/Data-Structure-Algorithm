@@ -1,25 +1,18 @@
 #include<iostream>
 #include<vector>
 using namespace std;
-enum node_states{
-    UNVISITED,  
-    INSTACK,
-    VISITED        
-};
 class Graph
 {
     int nodes;
     vector<vector<int>> adjList;
-    bool dfs_recursion(int start, vector<node_states>& visited)
+    bool hasCycle_recursion(int start, vector<bool>& visited,int parent)
     {
-        visited[start] = INSTACK;
+        visited[start] = true;
         for(int u: adjList[start])
         {
-            if(visited[u] == INSTACK) return true;
-            if(visited[u] == UNVISITED && dfs_recursion(u,visited)) 
-                return true;
+            if(visited[u] && u!=parent) return true;
+            if(!visited[u] && hasCycle_recursion(u,visited,start)) return true;
         }
-        visited[start] = VISITED;
         return false;
     }
     public:
@@ -27,13 +20,14 @@ class Graph
     void addEdge(int src, int dest)
     {
         adjList[src].push_back(dest);
+        adjList[dest].push_back(src);
     }
     bool hasCycle()
     {
-        vector<node_states> visited(nodes, UNVISITED);
+        vector<bool> visited(nodes, false);
         for(int i = 0; i< nodes; i++)
         {
-            if(visited[i]==UNVISITED && dfs_recursion(i,visited))
+            if(!visited[i] && hasCycle_recursion(i,visited,-1)) 
                 return true;
         }
         return false;
@@ -46,8 +40,8 @@ int main()
     G.addEdge(1,2);
     G.addEdge(0,3);
     G.addEdge(3,4);
-    G.addEdge(0,4);
+    G.addEdge(4,0);
     G.addEdge(4,2);
-    cout<< G.hasCycle()<< endl;
+    cout<<boolalpha<<G.hasCycle()<<endl; //true
     return 0;
 }
