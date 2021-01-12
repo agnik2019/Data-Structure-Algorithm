@@ -90,6 +90,49 @@ node* reverseknodes(node* &head, int k)
     }
     return prevptr;
 }
+void makeCycle(node* &head, int pos)
+{
+    node* temp = head;
+    node* startnode;
+    int count = 1;
+    while(temp->next != NULL)
+    {
+        if(count == pos) startnode = temp;
+        temp = temp->next;
+        count++;
+    }
+    temp->next = startnode;
+}
+
+bool detectCycle(node* &head)
+{
+    node* slow = head;
+    node* fast = head;
+    while(fast && fast->next)
+    {
+        slow = slow-> next;
+        fast = fast->next->next;
+        if(fast == slow) return true;
+    }
+    return false;
+}
+
+void removeCycle(node* &head)
+{
+    node* slow = head;
+    node* fast = head;
+    do{
+        slow = slow->next;
+        fast = fast ->next->next;
+    }while(slow!= fast);
+    fast = head;
+    while(slow ->next != fast->next)
+    {
+        slow = slow->next;
+        fast = fast->next;
+    }
+    slow->next = NULL;
+}
 
 void display(node* head)
 {
@@ -110,8 +153,12 @@ int main()
     insert_at_tail(head,4);
     insert_at_tail(head,5);
     insert_at_tail(head,6);
+    makeCycle(head,3);
+    //
+    cout<<detectCycle(head)<<endl;
+    removeCycle(head);
     display(head); 
-    node* reversednode = reverseknodes(head,2); 
-    display(reversednode);
+    // node* reversednode = reverseknodes(head,2); 
+    // display(reversednode);
     return 0;
 }
