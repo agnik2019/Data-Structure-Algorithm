@@ -133,7 +133,48 @@ void removeCycle(node* &head)
     }
     slow->next = NULL;
 }
-
+//find intersection point
+void makeintersection(node* &head1, node* &head2, int pos)
+{
+    node* temp1 = head1;
+    pos--;
+    while(pos--) temp1 = temp1->next;
+    node* temp2 = head2;
+    while(temp2->next) temp2 = temp2->next;
+    temp2->next = temp1;
+}
+int length(node* head)
+{
+    int l = 0;
+    while(head){
+        head = head->next;
+        l++;
+    }
+    return l;
+}
+node* intersection(node* &head1, node* &head2)
+{
+ int l1 = length(head1);
+    int l2 = length(head2);
+    int d = abs(l1-l2);
+    node* ptr1;
+    node* ptr2;
+    ptr1 = (l1>l2)? head1: head2;
+    ptr2 = (l1>l2)? head2: head1;
+    while(d)
+    {
+        ptr1 = ptr1->next;
+       if(ptr1==NULL) return NULL;
+        d--;
+    }
+    while(ptr1 && ptr2)
+    {
+        if(ptr1 == ptr2) return ptr1;
+        ptr1 = ptr1->next;
+        ptr2 = ptr2->next;
+    }
+    return NULL;
+}
 void display(node* head)
 {
     node* temp = head;
