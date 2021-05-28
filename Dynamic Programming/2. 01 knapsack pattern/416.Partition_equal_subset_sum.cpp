@@ -8,7 +8,7 @@ public:
         if(sum%2 != 0)
             return false;
       
-            sum = sum/2;  
+        sum = sum/2;  
         int n = nums.size();
         bool t[n+1][sum+1];
         for(int i =0;i<= nums.size();i++)
