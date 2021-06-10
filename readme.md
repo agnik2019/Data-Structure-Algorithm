@@ -31,7 +31,7 @@ Main points regarding disjoint set
 For finding parent we can use eith iterative or recursive method.
 Recurance relation will be:
 parent[v] = find_set(parent[v]); until finding the actual parent
-
+![princeton](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/quick-union.png)
 
 Code is given below:
 
