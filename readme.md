@@ -31,11 +31,14 @@ Main points regarding disjoint set
 For finding parent we can use eith iterative or recursive method.
 Recurance relation will be:
 parent[v] = find_set(parent[v]); until finding the actual parent
+
+
+
 ![princeton](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/quick-union.png)
 
 Code is given below:
 
-```
+```cpp
 const int N = 1e5+6;
 vector<int> parent(N);
 vector<int> sz(N);
@@ -64,7 +67,7 @@ void union_set(int a, int b)
 }
 ```
 Union find algorithm is used for detecting cycles and also in krushkal's algorithm.
-``` 
+```cpp
 for(auto i: adjList)
         {
             int u = i[0];
@@ -79,4 +82,115 @@ for(auto i: adjList)
             else 
                 union_set(u,v);
         }
+```
+- DFS Pattern
+```cpp
+    int nodes;
+    vector<vector<int>> adjList;
+    void dfs_recursion(int start, vector<bool>& visited)
+    {
+        visited[start] = true;
+        cout<<start<<endl;
+        for(int u: adjList[start])
+        {
+            if(!visited[u]) dfs_recursion(u,visited);
+        }
+    }
+    void DFS()
+    {
+        vector<bool> visited(nodes, false);
+        for(int i = 0; i< nodes; i++)
+        {
+            if(!visited[i]) dfs_recursion(i,visited);
+        }
+    }
+    
+```
+
+find cycle usinfg dfs in directed graph
+```cpp
+enum node_states{
+    UNVISITED,  
+    INSTACK,
+    VISITED        
+};
+ int nodes;
+    vector<vector<int>> adjList;
+    bool dfs_recursion(int start, vector<node_states>& visited)
+    {
+        visited[start] = INSTACK;
+        for(int u: adjList[start])
+        {
+            if(visited[u] == INSTACK) return true;
+            if(visited[u] == UNVISITED && dfs_recursion(u,visited)) 
+                return true;
+        }
+        visited[start] = VISITED;
+        return false;
+    }
+     bool hasCycle()
+    {
+        vector<node_states> visited(nodes, UNVISITED);
+        for(int i = 0; i< nodes; i++)
+        {
+            if(visited[i]==UNVISITED && dfs_recursion(i,visited))
+                return true;
+        }
+        return false;
+    }
+```
+
+find cycle usinfg dfs in an undirected graph
+```cpp
+ int nodes;
+  vector<vector<int>> adjList;
+    bool hasCycle_recursion(int start, vector<bool>& visited,int parent)
+    {
+        visited[start] = true;
+        for(int u: adjList[start])
+        {
+            if(visited[u] && u!=parent) return true;
+            if(!visited[u] && hasCycle_recursion(u,visited,start)) return true;
+        }
+        return false;
+    }
+    
+      bool hasCycle()
+    {
+        vector<bool> visited(nodes, false);
+        for(int i = 0; i< nodes; i++)
+        {
+            if(!visited[i] && hasCycle_recursion(i,visited,-1)) 
+                return true;
+        }
+        return false;
+    }
+```
+TopoLogical sort using dfs
+```cpp
+    int nodes;
+    vector<vector<int>> adjList;
+    void TS_recursion(int start, vector<bool>& visited, stack<int>& st)
+    {
+        visited[start] = true;
+        for(int u: adjList[start])
+        {
+            if(!visited[u]) TS_recursion(u,visited,st);
+        }
+        st.push(start);
+    }
+    void topologicalSort()
+    {
+        vector<bool> visited(nodes, false);
+        stack<int> st;
+        for(int i = 0; i< nodes; i++)
+        {
+            if(!visited[i]) TS_recursion(i,visited,st);
+        }
+        while(!st.empty())
+         {
+             cout<<st.top()<<" ";
+             st.pop();
+         }
+    }
 ```
