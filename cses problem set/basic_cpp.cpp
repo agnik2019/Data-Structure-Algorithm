@@ -1,15 +1,36 @@
 /*By AGNIK SAHA */
-
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <sstream>
+#include <queue>
+#include <deque>
+#include <bitset>
+#include <iterator>
+#include <list>
+#include <stack>
+#include <map>
+#include <unordered_map>
+#include <set>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <limits>
+#include <time.h>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
 using namespace std;
-
+ 
 #define ll				long long int
 #define ld				long double
 #define mod 			1000000007
 #define inf 			1e18 
 #define ff              first
 #define ss              second
-#define int             long long
 #define pb              push_back
 #define mp              make_pair
 #define pii             pair<int,int>
@@ -19,7 +40,7 @@ using namespace std;
 #define pq_max          priority_queue<int>
 #define pq_min          priority_queue<int,vi,greater<int> >
 #define loop(i,a,b)		for(int i =(a); i<=(b); i++)
-#define loopprev(i,a,b) for(int i =(a); i<=(b); i--)			
+#define loopprev(i,a,b) for(int i =(a); i<=(b); i--)		
 
  
 void file_i_o()
@@ -31,11 +52,10 @@ void file_i_o()
 #endif
 }
   
-int32_t main()
+int main()
 {
     file_i_o();
     int x;
     cin>>x;
-    cout<<(x+10)<<"\n";
     return 0;
 }

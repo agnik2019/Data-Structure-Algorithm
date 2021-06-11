@@ -91,7 +91,7 @@ public:
                 q.push(child);
         }
     }
-    if (sortedorder.size() != numCourses){
+    if (sortedorder.size() < numCourses){
         cout<<"IMPOSSIBLE" ;
         return vector<int>();
     }
