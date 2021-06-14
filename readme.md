@@ -246,7 +246,45 @@ So its better to choose random pivot element to improve time complexity.
         }
     }
 ```
+# HeapSort
 
+#### Heap
+
+A Heap is a special Tree-based data structure in which the tree is a complete binary tree. Generally, Heaps can be of two types:
+
+- 1. Max-Heap: In a Max-Heap the key present at the root node must be greatest among the keys present at all of it’s children. The same property must be recursively true for all sub-trees in that Binary Tree.
+- 2. Min-Heap: In a Min-Heap the key present at the root node must be minimum among the keys present at all of it’s children. The same property must be recursively true for all sub-trees in that Binary Tree.
+![heap](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/heapsort2.gif)
+
+#### Visualization
+![#](https://commons.wikimedia.org/wiki/File:Heap_sort_example.gif)
+```cpp
+    void siftDown(vector<int>& nums, int n, int i){
+        int biggest = i;
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+        if(l < n && nums[biggest] < nums[l])
+            biggest = l;
+        if(r < n && nums[biggest] < nums[r])
+            biggest = r;
+        if(biggest != i){
+            swap(nums[i], nums[biggest]);
+            siftDown(nums, n, biggest);
+        }
+    }
+    
+	// heapSort(nums);
+    void heapSort(vector<int>& nums){
+        // heapify stage (bottom up approach)
+        for(int i = nums.size() / 2 - 1; i >= 0; i--)
+            siftDown(nums, nums.size(), i);
+        // sorting stage
+        for(int i = nums.size() - 1; i > 0; i--){
+            swap(nums[0], nums[i]);
+            siftDown(nums, i, 0);
+        }
+    }
+```
 
 # Graph
 
