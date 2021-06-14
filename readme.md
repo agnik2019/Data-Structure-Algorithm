@@ -581,7 +581,7 @@ static vector<int> Toposort(int vertices, const vector<vector<int>>& edges){
     return sortedorder;
   }
 ```
-# Prims Algorithm
+## Prims Algorithm
 We use a boolean array visited[] to represent the set of vertices included in MST. If a value visited[v] is true, then vertex v is included in MST, otherwise not. Array dist[] is used to store key/distance values of all vertices. Another array parent[] to store indexes of parent nodes in MST. The parent array is the output array which is used to show the constructed MST. 
 ![prim](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/prim.gif)
 
@@ -623,7 +623,7 @@ void prims(int nodes){
 }
 ```
 
-# Dijkstra Algorithm
+## Dijkstra Algorithm
 ![dj](https://upload.wikimedia.org/wikipedia/commons/5/57/Dijkstra_Animation.gif)
 Lets visualize with the help of a table
 ![dj1](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/dj1.jpg)
@@ -663,5 +663,61 @@ void dijkstra(int src,int nodes)
             else cout<<-1<<" ";
         cout<<endl;
         }
+}
+```
+
+# Pattern Matching
+
+**BruteForce Solution**
+```cpp
+int strStr(const string A, const string B) 
+{
+    int m=A.length(),n=B.length();
+
+    for(int i=0;i<=m-n;i++)
+    {   
+        int j=0;
+        for(;j<n;j++)
+            if(B[j]!=A[i+j])break;
+        
+        if(j==n) return i;
+    }
+    return -1;
+}
+```
+
+**KMP Algo**
+```cpp
+vector<int> prefix_fun(string s){
+    int n = s.size();
+    vector<int> pi(n,0);
+    for(int i = 1; i<s.size(); i++){
+        int j= pi[i-1];
+        while(j>0 && s[i] != s[j])
+            j = pi[j-1];
+        if(s[i] == s[j]) j++;
+        pi[i] = j;
+    }
+    return pi;
+}
+int kmpalgo(string text, string pat){
+    int pos = -1;
+    int i(0),j(0);
+    vector<int> pi = prefix_fun(pat);
+    while(i< text.length()){
+        if(text[i] == pat[j]){
+            i++; 
+            j++;
+        }
+        else{
+            if(j) j = pi[j-1];
+            else i++;
+        }
+        if(j == pat.length()){
+            pos = i-pat.length();
+            break;
+        }
+    }
+    return pos;
 }
 ```
