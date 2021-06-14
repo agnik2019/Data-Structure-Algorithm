@@ -585,7 +585,10 @@ static vector<int> Toposort(int vertices, const vector<vector<int>>& edges){
   }
 ```
 ## Prims Algorithm
-We use a boolean array visited[] to represent the set of vertices included in MST. If a value visited[v] is true, then vertex v is included in MST, otherwise not. Array dist[] is used to store key/distance values of all vertices. Another array parent[] to store indexes of parent nodes in MST. The parent array is the output array which is used to show the constructed MST. 
+We use a boolean array visited[] to represent the set of vertices included in MST. If a value visited[v] is true, then vertex v is included in MST, otherwise not. Array dist[] is used to store key/distance values of all vertices. Another array parent[] to store indexes of parent nodes in MST. The parent array is the output array which is used to show the constructed MST.
+
+
+
 ![prim](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/prim.gif)
 
 ```cpp
@@ -729,7 +732,7 @@ int kmpalgo(string text, string pat){
 
 
 # Boyer Moore's algorithm
-![boyer](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/boyer1.jpg)
+![boyer](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/boyer.jpg)
 
 ```cpp
 void fillHashTable(string s,int hashtable[256])
