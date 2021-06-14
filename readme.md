@@ -39,6 +39,10 @@ Big-Theta refers to the tight bound of time or space complexity of an algorithm.
 - Best Case and Big Omega are generally not helpful since Best Cases are rare in the real world and lower bound might be very different than an upper bound.
 - Big-O isn't everything. On paper merge sort is faster than quick sort, but in practice quick sort is superior.
 
+![bigo](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/big0.jpg)
+![bigo2](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/bigo2.jpg)
+
+
 
 # Sorting Techniques
 
@@ -257,7 +261,7 @@ A Heap is a special Tree-based data structure in which the tree is a complete bi
 ![heap](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/heapsort2.gif)
 
 #### Visualization
-![#](https://commons.wikimedia.org/wiki/File:Heap_sort_example.gif)
+![#](https://upload.wikimedia.org/wikipedia/commons/f/fe/Heap_sort_example.gif)
 ```cpp
     void siftDown(vector<int>& nums, int n, int i){
         int biggest = i;
@@ -348,6 +352,42 @@ void union_set(int a, int b)
 }
 ```
 Union find algorithm is used for detecting cycles and also in krushkal's algorithm.
+![krush](https://upload.wikimedia.org/wikipedia/commons/a/a3/UnionFindKruskalDemo.gif)
+```cpp
+int main()
+{
+    bool cycle;
+    for(int i = 0; i< N; i++)
+        make_set(i);
+    int n, m; cin>>n>>m;
+    vector<vector<int>> edges;
+    for(int i = 0; i<m; i++)
+    {
+        int u,v,w; cin>>u>>v>>w;
+        edges.push_back({w,u,v});
+    }
+    sort(edges.begin(), edges.end());
+    int cost = 0;
+    for(auto i: edges)
+    {
+        int w = i[0];
+        int u = i[1];
+        int v = i[2];
+        int x = find_set(u);
+        int y = find_set(v);
+        if(x==y)
+            continue;
+        else {
+            cout<<u<<" "<<v<<endl;
+            cost += w;
+            union_set(u,v);
+        }
+    }
+    if(cycle) cout<<"cycle is found ";
+    else cout<<"cycle not found"<<endl;
+    return 0;
+}
+```
 ```cpp
 for(auto i: adjList)
         {
