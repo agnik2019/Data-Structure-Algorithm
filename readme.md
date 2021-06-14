@@ -3,6 +3,249 @@
 In this repo, some important data structure and algorithmic questions from leetcode, gfg, interviewbit, hackerrank and cses problem set is posted. 
 The questions cover all possible types of problems.
 
+### Definition:
+Asymptotic Notation is the hardware independent notation used to tell the time and space complexity of an algorithm. Meaning it's a standardized way of measuring how much memory an algorithm uses or how long it runs for given an input.
+
+#### Complexities
+The following are the Asymptotic rates of growth from best to worst:
+- constant growth - ``O(1)`` Runtime is constant and does not grow with `n`
+- logarithmic growth – ``O(log n)`` Runtime grows logarithmically in proportion to `n`
+- linear growth – ``O(n)`` Runtime grows directly in proportion to `n`
+- superlinear growth – ``O(n log n)`` Runtime grows in proportion _and_ logarithmically to `n`
+- polynomial growth – `O(n^c)` Runtime grows quicker than previous all based on `n`
+- exponential growth – `O(c^n)` Runtime grows even faster than polynomial growth based on `n`
+- factorial growth – `O(n!)` Runtime grows the fastest and becomes quickly unusable for even
+small values of `n`
+
+[(source: Soumyadeep Debnath, _Analysis of Algorithms | Big-O analysis_)](https://www.geeksforgeeks.org/analysis-algorithms-big-o-analysis/)
+
+Visualized below; the x-axis representing input size and the y-axis representing complexity:
+
+![#](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Comparison_computational_complexity.svg/400px-Comparison_computational_complexity.svg.png)
+
+[(source: Wikipedia, _Computational Complexity of Mathematical Operations_)](https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations)
+
+#### Big-O notation
+Big-O refers to the upper bound of time or space complexity of an algorithm, meaning it worst case runtime scenario. An easy way to think of it is that runtime could be better than Big-O but it will never be worse.
+#### Big-Ω (Big-Omega) notation
+Big-Omega refers to the lower bound of time or space complexity of an algorithm, meaning it is the best runtime scenario. Or runtime could worse than Big-Omega, but it will never be better.
+#### Big-θ (Big-Theta) notation
+Big-Theta refers to the tight bound of time or space complexity of an algorithm. Another way to think of it is the intersection of Big-O and Big-Omega, or more simply runtime is guaranteed to be a given complexity, such as `n log n`.
+
+#### What you need to know
+- Big-O and Big-Theta are the most common and helpful notations
+- Big-O does _not_ mean Worst Case Scenario, Big-Theta does _not_ mean average case, and Big-Omega does _not_ mean Best Case Scenario. They only connote the algorithm's performance for a particular scenario, and all three can be used for any scenario.
+- Worst Case means given an unideal input, Average Case means given a typical input, Best case means a ideal input. Ex. Worst case means given an input the algorithm performs particularly bad, or best case an already sorted array for a sorting algorithm.
+- Best Case and Big Omega are generally not helpful since Best Cases are rare in the real world and lower bound might be very different than an upper bound.
+- Big-O isn't everything. On paper merge sort is faster than quick sort, but in practice quick sort is superior.
+
+
+# Sorting Techniques
+
+**Selection Sort**: 
+#### Definition
+- A comparison based sorting algorithm.
+  - Starts with the cursor on the left, iterating left to right
+  - Compares the left side to the right, looking for the smallest known item
+    - If the left is smaller than the item to the right it continues iterating
+    - If the left is bigger than the item to the right, the item on the right becomes the known smallest number
+    - Once it has checked all items, it moves the known smallest to the cursor and advances the cursor to the right and starts over
+  - As the algorithm processes the data set, it builds a fully sorted left side of the data until the entire data set is sorted
+- Changes the array in place.
+
+#### What you need to know
+- Inefficient for large data sets.
+- Very simple to implement.
+
+#### Time Complexity
+- Best Case Sort: `O(n^2)`
+- Average Case Sort: `O(n^2)`
+- Worst Case Sort: `O(n^2)`
+
+#### Space Complexity
+- Worst Case: `O(1)`
+
+#### Visualization
+![#](https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif)
+
+[(source: Wikipedia, _Insertion Sort_)](https://en.wikipedia.org/wiki/Selection_sort)
+### Find the element in unsorted array and swap it with element at beginning.
+```cpp
+ for(int i=0; i<n-1; i++)
+    {
+        for(int j= i+1; j<n; j++)
+        {
+            if(arr[j]<arr[i])
+                swap(arr[j],arr[i]);
+        }
+    }
+```
+
+**Bubble Sort**
+Repeatedly swap two adjacent elements if they are in wrong order.
+```cpp
+    for(int counter = 1; counter<n; counter++)
+    {
+        for(int i = 0; i<n-counter; i++)
+        {
+            if(arr[i]>arr[i+1])
+                swap(arr[i], arr[i+1]);        
+        }
+    }
+```
+
+**Insertion Sort**
+#### Definition
+- A comparison based sorting algorithm.
+  - Iterates left to right comparing the current cursor to the previous item.
+  - If the cursor is smaller than the item on the left it swaps positions and the cursor compares itself again to the left hand side until it is put in its sorted position.
+  - As the algorithm processes the data set, the left side becomes increasingly sorted until it is fully sorted.
+- Changes the array in place.
+
+#### What you need to know
+- Inefficient for large data sets, but can be faster for than other algorithms for small ones.
+- Although it has an `O(n^2)` time complexity, in practice it is slightly less since its comparison scheme only requires checking place if it is smaller than its neighbor.
+
+#### Time Complexity
+- Best Case: `O(n)`
+- Average Case: `O(n^2)`
+- Worst Case: `O(n^2)`
+
+#### Space Complexity
+- Worst Case: `O(n)`
+
+#### Visualization
+![#](https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif)
+
+[(source: Wikipedia, _Insertion Sort_)](https://en.wikipedia.org/wiki/Insertion_sort)
+
+### Insert an element from unsorted array to its correct position in sorted array.
+```cpp
+    for(int i = 1; i<n; i++)
+    {
+        int current = arr[i];
+        int j = i-1;
+        while(arr[j]> current && j>=0)
+        {
+            arr[j+1] = arr[j];
+            j--;
+        }
+        arr[j+1] = current;
+    }
+```
+
+**Merge Sort**
+#### Definition
+- A divide and conquer algorithm.
+  - Recursively divides entire array by half into subsets until the subset is one, the base case.
+  - Once the base case is reached results are returned and sorted ascending left to right.
+  - Recursive calls are returned and the sorts double in size until the entire array is sorted.
+
+#### What you need to know
+- This is one of the fundamental sorting algorithms.
+- Know that it divides all the data into as small possible sets then compares them.
+
+#### Time Complexity
+- Worst Case: `O(n log n)`
+- Average Case: `O(n log n)`
+- Best Case: `O(n)`
+
+#### Space Complexity
+- Worst Case: `O(1)`
+
+#### Visualization
+![#](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Merge_sort_algorithm_diagram.svg/400px-Merge_sort_algorithm_diagram.svg.png)
+
+[(source: Wikipedia, _Merge Sort_)](https://en.wikipedia.org/wiki/Merge_sort)
+```cpp
+	void merge(vector<int>& nums, int l, int m, int r){
+        vector<int> tmp(r - l + 1);
+        int i = l; // index for left subarray
+        int j = m + 1; // index for right subarray
+        int k = 0; // index for temporary array
+        while(i <= m && j <= r){
+            if(nums[i] <= nums[j]) tmp[k++] = nums[i++]; 
+            else tmp[k++] = nums[j++];
+        }
+        while(i <= m) tmp[k++] = nums[i++];
+        while(j <= r) tmp[k++] = nums[j++]; 
+        for(i = 0; i < k; i++) nums[l + i] = tmp[i];
+    }
+	
+	// mergeSort(nums, 0, nums.size() - 1);
+    void mergeSort(vector<int>& nums, int l, int r){
+        if(l >= r) return;
+        int m = l + (r - l) / 2; //middle index, same as (l+r)/2
+        mergeSort(nums, l, m);
+        mergeSort(nums, m + 1, r);
+        merge(nums, l, m, r);
+    }
+```
+
+**Quick Sort**
+#### Definition
+- A divide and conquer algorithm
+  - Partitions entire data set in half by selecting a random pivot element and putting all smaller elements to the left of the element and larger ones to the right.
+  - It repeats this process on the left side until it is comparing only two elements at which point the left side is sorted.
+  - When the left side is finished sorting it performs the same operation on the right side.
+- Computer architecture favors the quicksort process.
+- Changes the array in place.
+
+#### What you need to know
+- While it has the same Big O as (or worse in some cases) many other sorting algorithms it is often faster in practice than many other sorting algorithms, such as merge sort.
+
+#### Time Complexity
+- Worst Case: `O(n^2)`
+- Average Case: `O(n log n)`
+- Best Case: `O(n log n)`
+
+#### Space Complexity
+- Worst Case: `O(log n)`
+
+#### Visualization
+![#](https://upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif)
+
+[(source: Wikipedia, _Quicksort_)](https://en.wikipedia.org/wiki/Quicksort)
+
+#### Merge Sort Vs. Quicksort
+- Quicksort is likely faster in practice, but merge sort is faster on paper.
+- Merge Sort divides the set into the smallest possible groups immediately then reconstructs the incrementally as it sorts the groupings.
+- Quicksort continually partitions the data set by a pivot, until the set is recursively sorted.
+```cpp
+    int partitionIndex(vector<int>& nums, int low, int high){
+        int index = low-1;
+        for (int j=low;j<=high;j++){
+            if (nums[j]<= nums[high]){
+                index++;
+                swap(nums[index], nums[j]);
+            }
+        }
+        return index;
+    }
+```
+Here we choose the pivot element as last element of array. But sometimes it gives worst time complexity.
+So its better to choose random pivot element to improve time complexity.
+```cpp
+    int partitionIndex(vector<int>& nums, int low, int high){
+        int randIndex = low + rand()%(high-low+1);
+        swap(nums[randIndex], nums[high]);
+        int index = low-1;
+        for (int j=low;j<=high;j++){
+            if (nums[j]<= nums[high]){
+                index++;
+                swap(nums[index], nums[j]);
+            }
+        }
+        return index;
+    }
+    void quickSortHelper(vector<int>& nums, int low, int high){
+        if (low<high){
+            int p = partitionIndex(nums, low, high);
+            quickSortHelper(nums, low, p-1);
+            quickSortHelper(nums, p+1, high);
+        }
+    }
+```
 
 
 # Graph
