@@ -9,23 +9,23 @@ public:
             hashtable[(int)s[i]] = i;
     }
     int strStr(string haystack, string needle) {
-        int m = needle.length();
-        int n = haystack.length();
-        int s = 0;
+        int S = needle.length();
+        int T = haystack.length();
+        int i = 0;
         int hashtable[256];
         fillHashTable(haystack,hashtable);
-        while( s<= (n-m))
+        while( i<= (T-S))  //n-m
         {
-            int j = m-1;
-            while(j >= 0 && needle[j] == haystack[s+j])
+            int j = S-1;
+            while(j >= 0 && needle[j] == haystack[i+j])
                 j--;
             if(j<0)
             {
-                return s;
-                s += (s+m < n) ? m-hashtable[haystack[s+m]]:1;
-            }
+                return i;
+                i += (i+S < T) ? S-hashtable[haystack[i+S]]:1;
+            } 
             else
-                s += max(1, j-hashtable[haystack[s+j]]);
+                i += max(1, j-hashtable[haystack[i+j]]);
         }
         return -1;
     }

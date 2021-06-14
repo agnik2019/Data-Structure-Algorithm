@@ -41,6 +41,9 @@ Big-Theta refers to the tight bound of time or space complexity of an algorithm.
 
 ![bigo](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/big0.jpg)
 ![bigo2](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/bigo2.jpg)
+![master](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/master.jpg)
+![recur](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/recur.jpg)
+
 
 
 
@@ -686,7 +689,9 @@ int strStr(const string A, const string B)
 }
 ```
 
-**KMP Algo**
+# KMP Algo
+![kmp](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/kmp1.jpg)
+
 ```cpp
 vector<int> prefix_fun(string s){
     int n = s.size();
@@ -721,3 +726,79 @@ int kmpalgo(string text, string pat){
     return pos;
 }
 ```
+
+
+# Boyer Moore's algorithm
+![boyer](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/boyer1.jpg)
+
+```cpp
+void fillHashTable(string s,int hashtable[256])
+    {
+        for(int i = 0; i< 256; i++)
+            hashtable[i] = -1;
+        for(int i = 0; i< s.length(); i++)
+            hashtable[(int)s[i]] = i;
+    }
+int strStr(string haystack, string needle) {
+        int S = needle.length();
+        int T = haystack.length();
+        int i = 0;
+        int hashtable[256];
+        fillHashTable(haystack,hashtable);
+        while( i<= (T-S))  //n-m
+        {
+            int j = S-1;
+            while(j >= 0 && needle[j] == haystack[i+j])
+                j--;
+            if(j<0)
+            {
+                return i;
+                i += (i+S < T) ? S-hashtable[haystack[i+S]]:1;
+            } 
+            else
+                i += max(1, j-hashtable[haystack[i+j]]);
+        }
+        return -1;
+    }
+```
+
+# Rabin Karp String algorithm
+![rolling](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/rolling.jpg)
+![rolling2](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/rolling2.jpg)
+```cpp
+int p = 31;
+const int N = 1e5+7, mod = 1e9+7;
+vector<long long> power(N);
+int main(){
+
+    string t = "agniksahannik";
+    string s = "nik";
+    int T = t.size(), S= s.size();
+    power[0] = 1;
+    for(int i = 1; i<N; i++)
+        power[i] = (power[i-1]*p)%mod;
+
+    vector<long long> h(T+1,0);
+    for(int i = 0; i<T;i++)
+        h[i+1] = (h[i]+(t[i]-'a'+1)*power[i])%mod;
+    long long h_s = 0;
+    for(int i = 0; i<S; i++)
+        h_s = (h_s+(s[i]-'a'+1)*power[i])%mod;
+
+    for(int i = 0; i+S-1<T; i++)
+    {
+        long long cur_hash = (h[i+S]-h[i]+mod)%mod;
+        if(cur_hash == (h_s*power[i])%mod)
+            cout<<i<<" ";
+    }
+    return 0;
+}
+```
+
+
+
+
+
+
+
+
