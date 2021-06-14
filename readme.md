@@ -581,3 +581,87 @@ static vector<int> Toposort(int vertices, const vector<vector<int>>& edges){
     return sortedorder;
   }
 ```
+# Prims Algorithm
+We use a boolean array visited[] to represent the set of vertices included in MST. If a value visited[v] is true, then vertex v is included in MST, otherwise not. Array dist[] is used to store key/distance values of all vertices. Another array parent[] to store indexes of parent nodes in MST. The parent array is the output array which is used to show the constructed MST. 
+![prim](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/prim.gif)
+
+```cpp
+const int INF = 1000000000;
+vector<vector<int>> graph[1000];
+void prims(int nodes){
+     priority_queue< pair<int,int>, vector <pair<int,int>> , greater<pair<int,int>> > pq;
+                // pair indicates <weight,node>
+     int src = 0; // Taking vertex 0 as source
+     int cost = 0;
+     vector<int> dist(nodes, INF);
+     vector<int> parent(nodes, -1);
+     vector<bool> visited(nodes, false);
+        pq.push(make_pair(0, src));
+        dist[src] = 0;
+        while (!pq.empty())
+        {
+           int u = pq.top().second;
+            pq.pop();      
+           visited[u] = true;  
+
+            for (auto it : graph[u])
+            {
+                int v = it[0];
+                int weight = it[1];
+                cout<<u<<"-->"<<v<<": weight "<<weight<<endl;
+                cost+= weight;
+                if (visited[v] == false && dist[v] > weight)
+                {
+                    dist[v] = weight;
+                    pq.push(make_pair(dist[v], v));
+                    parent[v] = u;
+                }
+            }
+        }
+        cout<<"total cost of paths using prim "<<cost<<endl;
+
+}
+```
+
+# Dijkstra Algorithm
+![dj](https://upload.wikimedia.org/wikipedia/commons/5/57/Dijkstra_Animation.gif)
+Lets visualize with the help of a table
+![dj1](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/dj1.jpg)
+![dj2](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/dj2.jpg)
+
+
+```cpp
+const int INF = 1000000000;
+vector<vector<int>> graph[1000];
+void dijkstra(int src,int nodes)
+{
+    priority_queue< pair<int,int>, vector <pair<int,int>> , greater<pair<int,int>> > pq;
+    vector<int> dist(nodes, INF);
+    dist[src] = 0;
+    pq.push(make_pair(0, src));
+    while (!pq.empty())
+    {
+        int u = pq.top().second;
+        pq.pop();      
+
+        for (auto it : graph[u])
+        {
+           int v = it[0];
+           int weight = it[1];
+            if (dist[v] > dist[u]+weight)
+                {
+                    dist[v] = dist[u]+weight;
+                    pq.push(make_pair(dist[v], v));
+                }
+         }
+     }
+    cout<<"Djkstra single source shortest path "<<endl;
+        for(int i=1;i<=nodes;i++)
+        {
+            if(dist[i] <INF)
+              cout<<dist[i]<<" ";
+            else cout<<-1<<" ";
+        cout<<endl;
+        }
+}
+```
