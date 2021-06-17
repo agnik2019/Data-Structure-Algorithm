@@ -797,6 +797,160 @@ int main(){
     return 0;
 }
 ```
+# Backtracking
+For understanding backtracking algorithm, we need to understand the concept of recursion. For understanding recursion to build the base of backtracking, we will see the example given below:
+**Write a recursive function printAllBinary that accepts an integer number of digits and prints all binary numbers that have exactly that many digits, in ascending order, one per line**
+eg: printAllBinary(3):
+    000
+    001
+    010
+    011
+    100
+    101
+    110
+    111
+![bt](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/backtrack1.jpg)
+
+```cpp
+void printAllBinaryHelper(int digit, string sofar){
+    if(digit == 0)
+        cout<<sofar<<endl;
+    else{
+        printAllBinaryHelper(digit-1, sofar+"0");
+        printAllBinaryHelper(digit-1, sofar+"1");
+    }
+}
+void printAllBinary(int numDigits)
+{
+    printAllBinaryHelper(numDigits,"");
+}
+```
+**Recursive Backtracking**: 
+using recursion to explore solutions to a problem and abandoning them if they are not suitable.
+– Determine whether a solution exists
+– Find a solution
+– Find the best solution
+– Count the number of solutions
+– Print/find all the solutions
+**Applications**:
+– Puzzle solving (Sudoku, Crosswords, etc.)
+– Game playing (Chess, Solitaire, etc.)
+– Constraint satisfaction problems (scheduling, matching, etc.)
+
+**Recursion Checklist**
+- Find what information we need to keep track of. What inputs/outputs are needed to solve the problem at each step? Do we need a wrapper function?
+- Find our base case(s). What are the simplest (nonrecursive) instance(s) of this problem?
+- Find our recursive step. How can this problem be solved in terms of one or more simpler instances of the same problem that lead to a base case?
+- Ensure every input is handled. Do we cover all possible cases? Do we need to handle errors?
+
+
+Write a recursive function diceRoll that accepts an integer representing a number of 6-sided dice to roll, and output all possible combinations of values that could appear on the dice.
+
+![bt2](https://github.com/agnik2019/Data-Structure-Algorithm/blob/main/assets/backtrack2.jpg)
+
+Enter the available dice numbers 2
+[1 1 ][1 2 ][1 3 ][1 4 ][1 5 ][1 6 ][2 1 ][2 2 ][2 3 ][2 4 ][2 5 ][2 6 ][3 1 ][3 2 ][3 3 ][3 4 ][3 5 ][3 6 ][4 1 ][4 2 ][4 3 ][4 4 ][4 5 ][4 6 ][5 1 ][5 2 ][5 3 ][5 4 ][5 5 ][5 6 ][6 1 ][6 2 ][6 3 ][6 4 ][6 5 ][6 6 ]
+
+```cpp
+void diceRollHelper(int dice, vector<int>& chosen) 
+{
+    if (dice == 0) 
+    {
+        cout<<'[';
+        for(auto num: chosen)
+         cout<< num<< " "; // base case
+        cout<<']';
+    } 
+    else 
+    {
+        for (int i = 1; i <= 6; i++) 
+        {
+            chosen.push_back(i); // choose
+            diceRollHelper(dice - 1, chosen); // explore
+            chosen.pop_back(); // un-choose
+        }
+    }
+}
+// Prints all possible outcomes of rolling the given
+// number of six-sided dice in {#, #, #} format.
+void diceRolls(int dice) 
+{
+    vector<int> chosen;
+    diceRollHelper(dice, chosen);
+}
+```
+
+**Write a function diceSum similar to diceRoll, but it also accepts a desired sum and prints only combinations that add up to exactly that sum.**
+```
+diceSum(2,7) 
+{1,6}
+{2,5}
+{3,4}
+{4,3}
+{5,2}
+{6,1}
+```
+```cpp
+void diceSum(int dice, int desiredSum) 
+{
+    Vector<int> chosen;
+    diceSumHelper(dice, desiredSum, chosen);
+}
+void diceSumHelper(int dice, int desiredSum, Vector<int>& chosen) 
+{
+    if (dice == 0) 
+    {
+        if (sumAll(chosen) == desiredSum) 
+        {
+             cout << chosen << endl; // base case
+        }
+    } 
+    else 
+    {
+        for (int i = 1; i <= 6; i++) 
+        {
+            chosen.add(i); // choose
+            diceSumHelper(dice - 1, desiredSum, chosen); // explore
+            chosen.remove(chosen.size() - 1); // un-choose
+        }
+    }
+}
+int sumAll(const Vector<int>& v)
+{
+    int sum = 0;
+    for (int k : v) { sum += k; }
+    return sum;
+}
+```
+### We need not visit every branch of the decision tree.
+- Some branches are clearly not going to lead to success.
+- We can preemptively stop, or prune, these branches
+```cpp
+void diceSum(int dice, int desiredSum) 
+{
+    Vector<int> chosen;
+    diceSumHelper(dice, 0, desiredSum, chosen);
+}
+void diceSumHelper(int dice, int sum, int desiredSum, Vector<int>& chosen)
+{
+    if (dice == 0) 
+    {
+        if (sum == desiredSum) {
+        cout << chosen << endl; // base case
+        }
+    } 
+    else if (sum + 1*dice <= desiredSum && sum + 6*dice >= desiredSum) 
+    {
+        for (int i = 1; i <= 6; i++) 
+        {
+            chosen.add(i); // choose
+            diceSumHelper(dice - 1, sum + i, desiredSum, chosen); // explore
+            chosen.remove(chosen.size() - 1); // un-choose
+        }
+    }
+}
+```
+
 
 
 
