@@ -950,9 +950,27 @@ void diceSumHelper(int dice, int sum, int desiredSum, Vector<int>& chosen)
     }
 }
 ```
+### Choose-explore-unchoose pattern
+For each option
+ - Choose the option.
+ - Explore the option.
+ - Unchoose the option.
 
-
-
+```cpp
+void explore(options, soFar)
+{
+    if (no more decisions to make) {
+        // base case
+    } else {
+        // recursive case, we have a decision to make
+        for (each available option) {
+            choose (update options/sofar)
+            explore (recur on updated options/sofar)
+            unchoose (undo changes to options/sofar)
+        }
+    }
+}
+```
 
 # Dynamic Programming
 Some popular problems of dynamic programming are given in the table below:
